@@ -1,17 +1,31 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(patterns VERSION 0.1.0)
+cmake_minimum_required(VERSION 3.5)
+project(cpp-notes VERSION 0.1.0)
 
 
-### -- Misc options
-#set(CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
-#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Og -DDEBUG")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin) 
+set(executable ${CMAKE_PROJECT_NAME})
 
-add_subdirectory(patterns)
-add_subdirectory(basics)
+add_executable(${executable}
+    ${PROJECT_SOURCE_DIR}/src/patterns/creational/singleton.cpp
+)
 
-### -- Compile options and features
-#target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
-#target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_definitions(${executable} PRIVATE
+    $<$<CONFIG:Debug>:DEBUG>
+)
+
+target_compile_options(${executable} PRIVATE
+    #$<$<CONFIG:Debug>:-Og -g3 -ggdb>
+    #$<$<CONFIG:Release>:-Og -g0>
+    -Wall
+    -Wextra
+    -Wpedantic
+    -fdiagnostics-color=always
+)
+
+target_compile_features(${executable} PRIVATE
+    c_std_11
+    cxx_std_23
+)
+
+set(CMAKE_VERBOSE_MAKEFILE OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
