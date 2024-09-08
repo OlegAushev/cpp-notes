@@ -6,7 +6,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(executable ${CMAKE_PROJECT_NAME})
 
 add_executable(${executable}
-    ${PROJECT_SOURCE_DIR}/src/fsm/variant_fsm.cpp
+    ${PROJECT_SOURCE_DIR}/src/algorithms/sorting.cpp
 )
 
 target_compile_definitions(${executable} PRIVATE
