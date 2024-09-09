@@ -14,10 +14,6 @@ void print(const std::vector<int>& v) {
 
 
 std::vector<int> insertion_sort_base(std::vector<int> v) {
-    if (v.empty() || v.size() == 1) {
-        return v;
-    }
-
     for (int i = 1uz; i < int(v.size()); ++i) {
         int k = v[i];
         int j = i - 1;
@@ -37,7 +33,7 @@ std::vector<int> insertion_sort_base(std::vector<int> v) {
 
 
 std::vector<int> insertion_sort(std::vector<int> v) {
-    if (v.empty() || v.size() == 1) {
+    if (v.empty()) {
         return v;
     }
 
