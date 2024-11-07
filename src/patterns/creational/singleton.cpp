@@ -1,7 +1,7 @@
 #include <iostream>
+#include <mutex>
 #include <string>
 #include <thread>
-#include <mutex>
 
 
 /**
@@ -24,10 +24,10 @@ public:
 
     std::string str() const { return _str; }
 
-    SingletonNonSafe(SingletonNonSafe const &) = delete;
-    SingletonNonSafe(SingletonNonSafe &&) = delete;
-    SingletonNonSafe &operator=(SingletonNonSafe const &) = delete;
-    SingletonNonSafe &operator=(SingletonNonSafe &&) = delete;
+    SingletonNonSafe(SingletonNonSafe const&) = delete;
+    SingletonNonSafe(SingletonNonSafe&&) = delete;
+    SingletonNonSafe& operator=(SingletonNonSafe const&) = delete;
+    SingletonNonSafe& operator=(SingletonNonSafe&&) = delete;
 
     static void ThreadFoo() {
         // Этот код эмулирует медленную инициализацию.
@@ -67,10 +67,10 @@ public:
 
     std::string str() const { return _str; }
 
-    SingletonSafe(SingletonSafe const &) = delete;
-    SingletonSafe(SingletonSafe &&) = delete;
-    SingletonSafe &operator=(SingletonSafe const &) = delete;
-    SingletonSafe &operator=(SingletonSafe &&) = delete;
+    SingletonSafe(SingletonSafe const&) = delete;
+    SingletonSafe(SingletonSafe&&) = delete;
+    SingletonSafe& operator=(SingletonSafe const&) = delete;
+    SingletonSafe& operator=(SingletonSafe&&) = delete;
 
     static void ThreadFoo() {
         // Этот код эмулирует медленную инициализацию.
@@ -105,10 +105,10 @@ public:
 
     std::string str() const { return _str; }
 
-    SingletonC11(SingletonC11 const &) = delete;
-    SingletonC11(SingletonC11 &&) = delete;
-    SingletonC11 &operator=(SingletonC11 const &) = delete;
-    SingletonC11 &operator=(SingletonC11 &&) = delete;
+    SingletonC11(SingletonC11 const&) = delete;
+    SingletonC11(SingletonC11&&) = delete;
+    SingletonC11& operator=(SingletonC11 const&) = delete;
+    SingletonC11& operator=(SingletonC11&&) = delete;
 
     static void ThreadFoo() {
         // Этот код эмулирует медленную инициализацию.
@@ -129,10 +129,10 @@ public:
  *
  * @return int
  */
-int main(int, char **) {
-    std::cout << "If you see the same value, then singleton was reused (ok)\n" <<
-        "If you see different values, then 2 singletons were created (bad)\n\n" <<
-        "Result for SingletonNonSafe:\n";
+int main(int, char**) {
+    std::cout << "If you see the same value, then singleton was reused (ok)\n"
+              << "If you see different values, then 2 singletons were created (bad)\n\n"
+              << "Result for SingletonNonSafe:\n";
     std::thread t1(SingletonNonSafe::ThreadFoo);
     std::thread t2(SingletonNonSafe::ThreadBar);
     t1.join();
