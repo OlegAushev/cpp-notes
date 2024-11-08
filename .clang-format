@@ -49,7 +49,7 @@ Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 DisableFormat: false
 EmptyLineAfterAccessModifier: Never
-EmptyLineBeforeAccessModifier: LogicalBlock
+EmptyLineBeforeAccessModifier: Leave
 FixNamespaceComments: true
 IncludeBlocks: Preserve
 IndentAccessModifiers: false
