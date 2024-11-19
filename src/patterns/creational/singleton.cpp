@@ -3,11 +3,7 @@
 #include <string>
 #include <thread>
 
-
-/**
- * @brief Non-thread-safe Singleton
- *
- */
+// Non-thread-safe Singleton
 class SingletonNonSafe {
 protected:
     SingletonNonSafe(const std::string& str) : _str(str) {}
@@ -30,25 +26,21 @@ public:
     SingletonNonSafe& operator=(SingletonNonSafe&&) = delete;
 
     static void ThreadFoo() {
-        // Этот код эмулирует медленную инициализацию.
+        // emulating slow initialization
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         SingletonNonSafe* singleton = SingletonNonSafe::instance("FOO");
         std::cout << singleton->str() << "\n";
     }
 
     static void ThreadBar() {
-        // Этот код эмулирует медленную инициализацию.
+        // emulating slow initialization
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         SingletonNonSafe* singleton = SingletonNonSafe::instance("BAR");
         std::cout << singleton->str() << "\n";
     }
 };
 
-
-/**
- * @brief Thread-safe Singleton
- *
- */
+// Thread-safe Singleton
 class SingletonSafe {
 protected:
     SingletonSafe(const std::string& str) : _str(str) {}
@@ -73,25 +65,21 @@ public:
     SingletonSafe& operator=(SingletonSafe&&) = delete;
 
     static void ThreadFoo() {
-        // Этот код эмулирует медленную инициализацию.
+        // emulating slow initialization
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         SingletonSafe* singleton = SingletonSafe::instance("FOO");
         std::cout << singleton->str() << "\n";
     }
 
     static void ThreadBar() {
-        // Этот код эмулирует медленную инициализацию.
+        // emulating slow initialization
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         SingletonSafe* singleton = SingletonSafe::instance("BAR");
         std::cout << singleton->str() << "\n";
     }
 };
 
-
-/**
- * @brief Thread-safe Singleton C++11
- *
- */
+// Thread-safe Singleton C++11
 class SingletonC11 {
 protected:
     SingletonC11(const std::string& str) : _str(str) {}
@@ -111,18 +99,17 @@ public:
     SingletonC11& operator=(SingletonC11&&) = delete;
 
     static void ThreadFoo() {
-        // Этот код эмулирует медленную инициализацию.
+        // emulating slow initialization
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         std::cout << SingletonC11::instance("FOO").str() << "\n";
     }
 
     static void ThreadBar() {
-        // Этот код эмулирует медленную инициализацию.
+        // emulating slow initialization
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         std::cout << SingletonC11::instance("BAR").str() << "\n";
     }
 };
-
 
 /**
  * @brief
@@ -130,9 +117,10 @@ public:
  * @return int
  */
 int main(int, char**) {
-    std::cout << "If you see the same value, then singleton was reused (ok)\n"
-              << "If you see different values, then 2 singletons were created (bad)\n\n"
-              << "Result for SingletonNonSafe:\n";
+    std::cout
+            << "If you see the same value, then singleton was reused (ok)\n"
+            << "If you see different values, then 2 singletons were created (bad)\n\n"
+            << "Result for SingletonNonSafe:\n";
     std::thread t1(SingletonNonSafe::ThreadFoo);
     std::thread t2(SingletonNonSafe::ThreadBar);
     t1.join();
