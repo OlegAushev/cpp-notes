@@ -1,90 +1,96 @@
 #include <iostream>
 #include <memory>
 
-
-class AbstractProductA {
+class Button {
 public:
-    virtual ~AbstractProductA() = default;
-    virtual std::string name() const = 0;
+    virtual ~Button() = default;
+    virtual void press() = 0;
 };
 
-
-class ConcreteProductAX : public AbstractProductA {
+class Checkbox {
 public:
-virtual ~ConcreteProductAX() = default;
-    virtual std::string name() const override { return "A-X"; }
+    virtual ~Checkbox() = default;
+    virtual void toggle() = 0;
 };
 
-
-class ConcreteProductAY : public AbstractProductA {
+class QtButton : public Button {
 public:
-    virtual ~ConcreteProductAY() = default;
-    virtual std::string name() const override { return "A-Y"; }
+    virtual ~QtButton() = default;
+    virtual void press() override {
+        std::cout << "QtButton pressed." << std::endl;
+    }
 };
 
-
-class AbstractProductB {
+class GtkButton : public Button {
 public:
-    virtual ~AbstractProductB() = default;
-    virtual std::string name() const = 0;
+    virtual ~GtkButton() = default;
+    virtual void press() override {
+        std::cout << "GtkButton pressed." << std::endl;
+    }
 };
 
-
-class ConcreteProductBX : public AbstractProductB {
+class QtCheckbox : public Checkbox {
 public:
-virtual ~ConcreteProductBX() = default;
-    virtual std::string name() const override { return "B-X"; }
+    virtual ~QtCheckbox() = default;
+    virtual void toggle() override {
+        std::cout << "QtCheckbox toggled." << std::endl;
+    }
 };
 
-
-class ConcreteProductBY : public AbstractProductB {
+class GtkCheckbox : public Checkbox {
 public:
-    virtual ~ConcreteProductBY() = default;
-    virtual std::string name() const override { return "B-Y"; }
+    virtual ~GtkCheckbox() = default;
+    virtual void toggle() override {
+        std::cout << "GtkCheckbox toggled." << std::endl;
+    }
 };
 
-
-
-
-class AbstractFactory {
+class GuiFactory {
 public:
-    virtual ~AbstractFactory() = default;
-    virtual std::unique_ptr<AbstractProductA> create_product_a() = 0;
-    virtual std::unique_ptr<AbstractProductB> create_product_b() = 0;
+    virtual ~GuiFactory() = default;
+    virtual std::unique_ptr<Button> create_button() = 0;
+    virtual std::unique_ptr<Checkbox> create_checkbox() = 0;
 };
 
-
-class ConcreteFactoryX : public AbstractFactory {
+class QtFactory : public GuiFactory {
 public:
-    virtual ~ConcreteFactoryX() = default;
-    virtual std::unique_ptr<AbstractProductA> create_product_a() override { return std::make_unique<ConcreteProductAX>(); }
-    virtual std::unique_ptr<AbstractProductB> create_product_b() override { return std::make_unique<ConcreteProductBX>(); }
+    virtual ~QtFactory () = default;
+
+    virtual std::unique_ptr<Button> create_button() override {
+        return std::make_unique<QtButton>();
+    }
+
+    virtual std::unique_ptr<Checkbox> create_checkbox() override {
+        return std::make_unique<QtCheckbox>();
+    }
 };
 
-
-class ConcreteFactoryY : public AbstractFactory {
+class GtkFactory : public GuiFactory {
 public:
-    virtual ~ConcreteFactoryY() = default;
-    virtual std::unique_ptr<AbstractProductA> create_product_a() override { return std::make_unique<ConcreteProductAY>(); }
-    virtual std::unique_ptr<AbstractProductB> create_product_b() override { return std::make_unique<ConcreteProductBY>(); }
+    virtual ~GtkFactory () = default;
+
+    virtual std::unique_ptr<Button> create_button() override {
+        return std::make_unique<GtkButton>();
+    }
+
+    virtual std::unique_ptr<Checkbox> create_checkbox() override {
+        return std::make_unique<GtkCheckbox>();
+    }
 };
-
-
 
 
 int main() {
-    ConcreteFactoryX factory_x;
-    ConcreteFactoryY factory_y;
+    QtFactory qt_factory;
+    auto button1 = qt_factory.create_button();
+    auto checkbox1 = qt_factory.create_checkbox();
+    button1->press();
+    checkbox1->toggle();
 
-    auto p_ax = factory_x.create_product_a();
-    auto p_bx = factory_x.create_product_b();
-    auto p_ay = factory_y.create_product_a();
-    auto p_by = factory_y.create_product_b();
-
-    std::cout << p_ax->name() << '\n';
-    std::cout << p_bx->name() << '\n';
-    std::cout << p_ay->name() << '\n';
-    std::cout << p_by->name() << '\n';
+    GtkFactory gtk_factory;
+    auto button2 = gtk_factory.create_button();
+    auto checkbox2 = gtk_factory.create_checkbox();
+    button2->press();
+    checkbox2->toggle();
 
     return 0;
 }
