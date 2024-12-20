@@ -54,7 +54,7 @@ public:
 
 class QtFactory : public GuiFactory {
 public:
-    virtual ~QtFactory () = default;
+    virtual ~QtFactory() = default;
 
     virtual std::unique_ptr<Button> create_button() override {
         return std::make_unique<QtButton>();
@@ -67,7 +67,7 @@ public:
 
 class GtkFactory : public GuiFactory {
 public:
-    virtual ~GtkFactory () = default;
+    virtual ~GtkFactory() = default;
 
     virtual std::unique_ptr<Button> create_button() override {
         return std::make_unique<GtkButton>();
