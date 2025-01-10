@@ -43,17 +43,23 @@ class WindowBuilder {
 protected:
     std::unique_ptr<Window> window_;
 public:
-    WindowBuilder() : window_{std::make_unique<Window>(window_counter++)} {}
-    std::unique_ptr<Window> build() {
-        auto product = std::move(window_);
+    WindowBuilder() = default;
+
+    std::unique_ptr<Window> get() { return std::move(window_); }
+
+    WindowBuilder& build() {
         window_ = std::make_unique<Window>(window_counter++);
-        return product;
+        return *this;
     }
+
     virtual WindowBuilder& title(const std::string& t) { return *this; }
+
     virtual WindowBuilder& options(const std::vector<std::string> opt) {
         return *this;
     }
+
     virtual WindowBuilder& fullscreen(bool v) { return *this; }
+
     virtual WindowBuilder& border(int v) { return *this; }
 };
 
@@ -113,20 +119,22 @@ class WindowBuildDirector {
 public:
     std::unique_ptr<Window> build_window(WindowBuilder& builder,
                                          const std::string& title) {
-        return builder.title(title)
+        return builder.build()
+                .title(title)
                 .options({})
                 .fullscreen(false)
                 .border(0)
-                .build();
+                .get();
     }
 
     std::unique_ptr<Window> build_fullscreen_window(WindowBuilder& builder,
                                                     const std::string& title) {
-        return builder.title(title)
+        return builder.build()
+                .title(title)
                 .options({})
                 .fullscreen(true)
                 .border(0)
-                .build();
+                .get();
     }
 };
 
