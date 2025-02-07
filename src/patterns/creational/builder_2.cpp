@@ -86,7 +86,7 @@ public:
     }
 };
 
-int main() {
+[[gnu::weak]] int main() {
     RtfDocument rtf_doc("Hello, world!\nThis is just a text.\n",
                         "Liberation Serif");
 

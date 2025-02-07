@@ -1,7 +1,6 @@
 #include <iostream>
 #include <variant>
 
-
 template<typename FsmType, typename... States>
 class fsm {
 private:
@@ -11,7 +10,8 @@ public:
     template<typename Event>
     void dispatch(Event&& event) {
         auto& child = static_cast<FsmType&>(*this);
-        const auto& visitor = [&](auto& state) -> std::optional<state_variant_t> {
+        const auto& visitor =
+                [&](auto& state) -> std::optional<state_variant_t> {
             return child.on_event(state, std::forward(event));
         };
         const auto& next_state = std::visit(visitor, _state);
@@ -19,12 +19,6 @@ public:
             _state = next_state.value();
         }
     }
-
-
 };
 
-
-int main() {
-
-    return 0;
-}
+[[gnu::weak]] int main() { return 0; }

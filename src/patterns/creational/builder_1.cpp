@@ -52,15 +52,18 @@ public:
         return *this;
     }
 
-    virtual WindowBuilder& title(const std::string& t) { return *this; }
-
-    virtual WindowBuilder& options(const std::vector<std::string> opt) {
+    virtual WindowBuilder& title([[maybe_unused]] const std::string& t) {
         return *this;
     }
 
-    virtual WindowBuilder& fullscreen(bool v) { return *this; }
+    virtual WindowBuilder&
+    options([[maybe_unused]] const std::vector<std::string> opt) {
+        return *this;
+    }
 
-    virtual WindowBuilder& border(int v) { return *this; }
+    virtual WindowBuilder& fullscreen([[maybe_unused]] bool v) { return *this; }
+
+    virtual WindowBuilder& border([[maybe_unused]] int v) { return *this; }
 };
 
 class StandardWindowBuilder : public WindowBuilder {
@@ -138,7 +141,7 @@ public:
     }
 };
 
-int main() {
+[[gnu::weak]] int main() {
     WindowBuildDirector director;
     StandardWindowBuilder standard_builder;
 

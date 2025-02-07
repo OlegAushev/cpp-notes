@@ -1,5 +1,7 @@
 #include <iostream>
 #include <memory>
+#include <print>
+#include <source_location>
 #include <string>
 #include <utility>
 #include <vector>
@@ -17,7 +19,7 @@ private:
 public:
     LineManipulator(LineFigure& line) : line_(line) {}
 
-    virtual void drag();
+    virtual void drag() override;
 };
 
 class TextFigure;
@@ -27,7 +29,7 @@ private:
 public:
     TextManipulator(TextFigure& text) : text_(text) {}
 
-    virtual void drag();
+    virtual void drag() override;
 };
 
 class Figure {
@@ -44,7 +46,7 @@ public:
     LineFigure(std::pair<int, int> begin, std::pair<int, int> end)
             : begin_(begin), end_(end) {}
 
-    virtual std::unique_ptr<Manipulator> create_manipulator() {
+    virtual std::unique_ptr<Manipulator> create_manipulator() override {
         return std::make_unique<LineManipulator>(*this);
     }
 
@@ -58,7 +60,7 @@ private:
 public:
     TextFigure(const std::string& text) : text_(text) {}
 
-    virtual std::unique_ptr<Manipulator> create_manipulator() {
+    virtual std::unique_ptr<Manipulator> create_manipulator() override {
         return std::make_unique<TextManipulator>(*this);
     }
 
@@ -76,6 +78,8 @@ void TextManipulator::drag() {
 }
 
 int main() {
+    std::print("File: {}\n", std::source_location::current().file_name());
+
     std::vector<std::shared_ptr<Figure>> figures;
 
     auto line = std::make_shared<LineFigure>(std::make_pair(-1, -2),

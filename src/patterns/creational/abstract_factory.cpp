@@ -78,8 +78,7 @@ public:
     }
 };
 
-
-int main() {
+[[gnu::weak]] int main() {
     QtFactory qt_factory;
     auto button1 = qt_factory.create_button();
     auto checkbox1 = qt_factory.create_checkbox();

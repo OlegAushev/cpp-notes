@@ -116,7 +116,7 @@ public:
  *
  * @return int
  */
-int main(int, char**) {
+[[gnu::weak]] int main(int, char**) {
     std::cout
             << "If you see the same value, then singleton was reused (ok)\n"
             << "If you see different values, then 2 singletons were created (bad)\n\n"

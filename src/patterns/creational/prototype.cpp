@@ -103,7 +103,7 @@ public:
     }
 };
 
-int main() {
+[[gnu::weak]] int main() {
     Circle circle({0, 0}, 1);
     Triangle triangle({1, 1}, {2, 2}, {3, 0});
     Rectangle rectangle({-5, 0}, 3, 2);
