@@ -77,7 +77,7 @@ void TextManipulator::drag() {
     std::cout << "Dragging text: <" << text_.text() << ">...\n";
 }
 
-int main() {
+[[gnu::weak]] int main() {
     std::print("File: {}\n", std::source_location::current().file_name());
 
     std::vector<std::shared_ptr<Figure>> figures;
